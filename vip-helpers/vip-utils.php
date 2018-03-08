@@ -955,6 +955,10 @@ function wpcom_vip_load_plugin( $plugin = false, $folder = false, $load_release_
 		}
 	}
 
+	if ( did_action( 'plugins_loaded' ) ) {
+		_doing_it_wrong( __FUNCTION__, sprintf( '`wpcom_vip_load_plugin( %s, %s )` was called after the `plugins_loaded` hook. For best results, we recommend loading your plugins earlier from `client-mu-plugins`.', esc_html( $plugin ), esc_html( $folder ) ), null );
+	}
+
 	// Shared plugins are being deprecated.
 	// This can be removed once shared plugins have all been removed.
 	// https://vip.wordpress.com/documentation/vip-go/deprecating-shared-plugins-on-vip-go/
