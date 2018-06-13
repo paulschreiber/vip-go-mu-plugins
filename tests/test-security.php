@@ -14,6 +14,20 @@ class VIP_Go_Security_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'restricted-login', $result->get_error_code() );
 	}
 
+	public function test__admin_username_not_restricted_outside_vip() {
+		define( WPCOM_IS_VIP_ENV, false );
+		$this->factory->user->create( [
+			'user_login' => 'admin',
+			'user_email' => 'admin@example.com',
+			'user_pass'  => 'secret1',
+		] );
+
+		$result = wp_authenticate( 'admin', 'secret1' );
+
+		$this->assertNotWPError( $result );
+		$this->assertEquals( $user_id, $result->ID );
+	}
+
 	public function test__vip_machine_user_username_restricted() {
 		$this->factory->user->create( [
 			'user_login' => WPCOM_VIP_MACHINE_USER_LOGIN,

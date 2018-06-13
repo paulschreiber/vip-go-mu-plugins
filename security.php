@@ -8,7 +8,16 @@ Version: 1.0
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+/**
+ * Is the username restricted on VIP environments?
+ * @param  string  $username username
+ * @return boolean
+ */
 function wpcom_vip_is_restricted_username( $username ) {
+	if ( ! defined( 'WPCOM_IS_VIP_ENV' ) || ! WPCOM_IS_VIP_ENV ) {
+		return false;
+	}
+
 	return 'admin' === $username
 		|| WPCOM_VIP_MACHINE_USER_LOGIN === $username
 		|| WPCOM_VIP_MACHINE_USER_EMAIL === $username;
